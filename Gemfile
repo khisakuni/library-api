@@ -18,6 +18,7 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   gem 'pry-rails', '~> 0.3.6'
   gem 'rspec-rails', '~> 3.6.0'
+  gem 'rubocop', require: false
 end
 
 group :development do
