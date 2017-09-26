@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
     return error_response('username must be present') unless valid_req?
     user = User.create(create_params)
     return render json: user, status: 201 if user.errors.empty?
-    render json: { errors: user.errors.full_messages }, status: 400
+    error_response(user.errors.full_messages)
   end
 
   private
