@@ -8,6 +8,14 @@ class Api::V1::UserBooksController < ApplicationController
     error_response(user_book.errors.full_messages)
   end
 
+  def update
+    if user_book.update(update_params)
+      render json: user_book, status: 200
+    else
+      error_response(user_book.errors.full_messages)
+    end
+  end
+
   private
 
   def valid_req?
@@ -16,6 +24,14 @@ class Api::V1::UserBooksController < ApplicationController
 
   def error_response(errors)
     render json: { errors: errors }, status: 400
+  end
+
+  def user_book
+    @user_book ||= user.user_books.find(params[:id])
+  end
+
+  def update_params
+    params.permit(:read)
   end
 
   def create_params

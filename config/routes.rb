@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :books, only: [:create]
       resources :users, only: [:create] do
-        resources :user_books, only: [:create]
+        resources :user_books, only: %i[create update]
       end
     end
   end

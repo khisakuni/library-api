@@ -50,6 +50,46 @@ describe Api::V1::UserBooksController do
       expect(response.status).to eq(400)
     end
   end
+
+  describe '#update' do
+    let(:user) { create(:user) }
+    let(:book) { create(:book) }
+
+    it 'makes read true' do
+      user_book = create(:user_book, user: user, book: book, read: false)
+      params = {
+        user_id: user.id,
+        id: user_book.id,
+        read: true
+      }
+
+      expect { put :update, params: params }
+        .to change { user_book.reload.read }.to(true)
+    end
+
+    it 'makes read false' do
+      user_book = create(:user_book, user: user, book: book, read: true)
+      params = {
+        user_id: user.id,
+        id: user_book.id,
+        read: false
+      }
+
+      expect { put :update, params: params }
+        .to change { user_book.reload.read }.to(false)
+    end
+
+    it 'returns 404 if user_book not found' do
+      params = {
+        user_id: user.id,
+        id: 1,
+        read: false
+      }
+      put :update, params: params
+
+      expect(response.status).to eq(404)
+    end
+  end
 end
 
 def user_book_from_json(response_body)
