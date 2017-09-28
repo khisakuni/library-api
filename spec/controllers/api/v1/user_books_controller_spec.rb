@@ -90,6 +90,25 @@ describe Api::V1::UserBooksController do
       expect(response.status).to eq(404)
     end
   end
+
+  describe '#destroy' do
+    let(:user) { create(:user) }
+    let(:book) { create(:book) }
+    let(:user_book) { create(:user_book, user: user, book: book) }
+
+    it 'destrorys user_book record' do
+      params = { user_id: user.id, id: user_book.id }
+      expect { delete :destroy, params: params }
+        .to change { user.reload.user_books.count }.by(-1)
+    end
+
+    it 'returns 404 if user_book is not found' do
+      params = { user_id: user.id, id: user_book.id + 1 }
+      delete :destroy, params: params
+
+      expect(response.status).to eq(404)
+    end
+  end
 end
 
 def user_book_from_json(response_body)

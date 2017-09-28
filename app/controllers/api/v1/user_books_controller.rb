@@ -16,6 +16,11 @@ class Api::V1::UserBooksController < ApplicationController
     end
   end
 
+  def destroy
+    user_book.destroy
+    head :ok
+  end
+
   private
 
   def valid_req?
