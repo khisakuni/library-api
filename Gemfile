@@ -16,6 +16,7 @@ gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
   gem 'pry-rails', '~> 0.3.6'
