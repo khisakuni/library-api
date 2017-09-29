@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :book do
-    author 'Uncle Bob'
-    title 'Clean Code'
+    author { Faker::Book.title }
+    title { Faker::Book.author }
   end
 end

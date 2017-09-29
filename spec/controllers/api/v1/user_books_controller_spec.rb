@@ -1,6 +1,48 @@
 require 'rails_helper'
 
 describe Api::V1::UserBooksController do
+  describe 'index' do
+    let(:user) { create(:user, username: 'foobar') }
+    let(:books) { create_list(:book, 3) }
+    before(:each) do
+      books.each { |book| create(:user_book, user: user, book: book) }
+    end
+
+    it 'returns all user_books' do
+      get :index, params: { user_id: user.id }
+      user_books = user_books_from_json(response.body)
+
+      expect(user_books).to eq(user.user_books)
+    end
+
+    it 'filters user_books by read' do
+      read_user_book = user.user_books.first
+      read_user_book.update(read: true)
+      get :index, params: { user_id: user.id, read: true }
+      user_books = user_books_from_json(response.body)
+
+      expect(user_books).to eq([read_user_book])
+    end
+
+    it 'filters user_books by not read' do
+      user.user_books.first.update(read: true)
+      get :index, params: { user_id: user.id, read: false }
+      user_books = user_books_from_json(response.body)
+      expected = UserBook.where(read: false)
+
+      expect(user_books).to eq(expected)
+    end
+
+    it 'filters user_books by author' do
+      author = books.first.author
+      get :index, params: { user_id: user.id, author: author }
+      user_books = user_books_from_json(response.body)
+      expected = UserBook.joins(:book).where(books: { author: author })
+
+      expect(user_books).to eq(expected)
+    end
+  end
+
   describe '#create' do
     let(:user) { create(:user) }
     let(:book) { create(:book) }
@@ -113,4 +155,11 @@ end
 
 def user_book_from_json(response_body)
   UserBook.find(JSON.parse(response_body)['id'])
+end
+
+def user_books_from_json(response_body)
+  ids = JSON.parse(response_body)['data'].map do |user_book|
+    user_book['id']
+  end
+  UserBook.find(ids)
 end

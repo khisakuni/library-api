@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 class Api::V1::UserBooksController < ApplicationController
+  def index
+    data = user_books.page(page).per(per_page)
+    res = {
+      data: data,
+      page: page,
+      per_page: per_page,
+      total_pages: data.total_pages,
+      total_count: data.total_count
+    }
+
+    render json: res
+  end
+
   def create
     return error_response('book_id must be present') unless valid_req?
     user_book = UserBook.create(create_params)
@@ -43,11 +56,25 @@ class Api::V1::UserBooksController < ApplicationController
     { user: user, book: book }
   end
 
+  def user_books
+    @user_books ||= begin
+      UserBooksFilter.new(UserBook, params).perform
+    end
+  end
+
   def user
     @user ||= User.find(params[:user_id])
   end
 
   def book
     @book ||= Book.find(params[:book_id])
+  end
+
+  def page
+    params.fetch(:page, 1)
+  end
+
+  def per_page
+    params.fetch(:per_page, 10)
   end
 end

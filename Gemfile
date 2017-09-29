@@ -11,6 +11,7 @@ gem 'rails', '~> 5.1.2'
 gem 'pg', '~> 0.21.0'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
+gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
@@ -20,6 +21,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6.0'
   gem 'rubocop', require: false
   gem 'factory_girl_rails', '~> 4.8.0'
+  gem 'faker', '~> 1.8', '>= 1.8.4'
 end
 
 group :development do
