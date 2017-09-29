@@ -26,14 +26,18 @@ $ bin/rubocop
 ## Users
 
 ### Create a User [POST]
+
 Create a user with a username. Username must be unique.
 
 **Request (application/json)**
+
 _Path_
-    `/api/v1/users`
+
+`/api/v1/users`
 
 _Params_
-    - `username`: String representing username.
+
+- `username`: String representing username.
 
 _Body_
 
@@ -44,13 +48,14 @@ _Body_
 ```
 
 **Response 201 (application/json)**
+
 _Params_
 
 - `id`: Primary key of user record.
 - `username`:  String representation of username.
 - `created_at`: Timestamp of creation.
 -  `updated_at`: Timestamp of last update.
-    
+
 _Body_
 
 ```
@@ -70,8 +75,10 @@ _Body_
 Create a book with a title and an author.
 
 **Request (application/json)**
+
 _Path_
-    `/api/v1/books`
+
+`/api/v1/books`
 
 _Params_
 
@@ -87,9 +94,11 @@ _Body_
 }
 ```
 
+
 **Response 201 (application/json)**
+
 _Fields_
-    
+
 - `id`: Primary key of book record.
 - `author`: Author of book.
 - `title`: Title of book.
@@ -107,7 +116,7 @@ _Body_
         "updated_at": "2017-09-29T12:43:32.887Z"
     }
 ```
-            
+
 ## UserBooks
 
 UserBooks are a join table between Users and Books, and associates a User record with a Book record. A User can have many UserBooks and a Book can have many UserBooks.
@@ -117,10 +126,13 @@ UserBooks are a join table between Users and Books, and associates a User record
 Creates a UserBook using a User ID and a Book ID. By default, the `read` field is `false` when a UserBook is created.
 
 **Request (application/json)**
+
 _Path_
+
 `/api/v1/users/:user_id/user_books`
 
 _Params_
+
     - `book_id`: Primary key of book record.
 
 _Body_
@@ -131,7 +143,9 @@ _Body_
     }
 ```
 
+
 **Response 201 (application/json)**
+
 _Fields_
 
 - `id`: Primary key of UserBook record.
@@ -141,7 +155,7 @@ _Fields_
 
 _Body_
 
-```        
+```
     {
         "id": 1,
         "read": false,
@@ -161,12 +175,15 @@ _Body_
     }
 ```
 
+
 ### Get a list of UserBooks [GET]
 
 Returns list of UserBooks for User. Optionally pass query parameters to filter list of UserBooks by read status or book author.
 
 **Request (application/json)**
+
 _Path_
+
 `/api/v1/users/:user_id/user_books`
 
 _Query Params_
@@ -174,7 +191,9 @@ _Query Params_
 - `author`: (optional) author of the book.
 - `read` : (optional) boolean value for read status.
 
+
 **Response**
+
 _Feilds_
 
 - `id`: Primary key of UserBook record.
@@ -200,12 +219,17 @@ _Body_
         "total_count": 1
     }
 ```
+
+
 ### Update a UserBook [PUT]
 
 Updates a UserBook's `read` field.
 
+
 **Request**
+
 _Path_
+
 `/api/v1/users/:user_id/user_books/:id`
 
 _Params_
@@ -220,14 +244,16 @@ _Body_
 }
 ```
 
+
 **Response**
+
 _Fields_
 
 - `id`: Primary key of UserBook.
 - `read`: Boolean value for read status.
 - `user`: Object with User fields. See User section.
 - `book`: Object with Book fields. See Book section.
-    
+
 _Body_
 
 ```
@@ -242,7 +268,9 @@ _Body_
 ### Delete a UserBook [DELETE]
 
 **Request (application/json)**
+
 _Path_
+
 `/api/v1/uses/:user_id/user_books/:id`
 
 **Reponse 200**
