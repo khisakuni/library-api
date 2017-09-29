@@ -7,6 +7,7 @@ end
 
 ruby '2.4.1'
 
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'rails', '~> 5.1.2'
 gem 'pg', '~> 0.21.0'
 gem 'puma', '~> 3.7'

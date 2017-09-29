@@ -16,7 +16,7 @@ class UserBooksFilter
   private
 
   def sanitize(params)
-    params.extract!(*filters.keys)
+    params.extract!(*filters.keys.map { |f| f.to_sym })
   end
 
   def filters

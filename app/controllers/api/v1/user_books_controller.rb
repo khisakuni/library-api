@@ -4,7 +4,7 @@ class Api::V1::UserBooksController < ApplicationController
   def index
     data = user_books.page(page).per(per_page)
     res = {
-      data: data,
+      data: data.map { |d| UserBookSerializer.new(d).as_json },
       page: page,
       per_page: per_page,
       total_pages: data.total_pages,
