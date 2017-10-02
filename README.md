@@ -8,6 +8,10 @@ Pull down the source. To download dependencies, run:
 ```
 $ bundle install
 ```
+To setup the database, run:
+```
+$ bin/rails db:create db:migrate
+```
 To start the server, run:
 ```
 $ bin/rails s
